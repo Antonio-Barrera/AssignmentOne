@@ -51,11 +51,11 @@ var questionsList = [
 var recordsList = [
   scoreOne = {
     name: "Yeni",
-    score: 8
+    score: 9
   },
   scoreTwo = {
     name: "Ever",
-    score: 5
+    score: 7
   },
 ]
 
@@ -83,22 +83,34 @@ function compareScores(userScore, recordScore) {
   return true;
 }
 
-
-userName = readlineSync.question("Can you tell me your first name? ");
-console.log(chalk.yellow("\nWelcome, " + userName + ". I'm gonna test your basic knowlegdes."));
-console.log(chalk.yellow("Please, press <y> if the answer is 'yes' and <n> if it's 'no'."));
-console.log(chalk.blue.bold("***************************************************************\n"));
-
-for (var i = 0; i < questionsList.length; i++) {
-  var currentQuestion = questionsList[i];
-  play(currentQuestion.question, currentQuestion.answer, (i + 1));
+//Welcome message function.
+function welcome(){
+  userName = readlineSync.question("Can you tell me your first name? ");
+  console.log(chalk.yellow("\nWelcome, " + userName + ". I'm gonna test your basic knowlegdes."));
+  console.log(chalk.yellow("Please, press <y> if the answer is 'yes' and <n> if it's 'no'."));
+  console.log(chalk.blue.bold("***************************************************************\n"));
 }
 
-for (var i = 0; i < recordsList.length; i++) {
-  var recordScore = recordsList[i];
-  result = compareScores(score, recordScore.score);
+//Function to play the game.
+function game(){
+  for (var i = 0; i < questionsList.length; i++) {
+    var currentQuestion = questionsList[i];
+    play(currentQuestion.question, currentQuestion.answer, (i + 1));
+  }
 }
 
-if (result) {
-  console.log(chalk.yellowBright.bold.underline("* Congratulations! You have beaten a record. Please take a screenshot and send me it to update the table. *"));
+//Function to check user final score.
+function checkScores(){
+  for (var i = 0; i < recordsList.length; i++) {
+    var recordScore = recordsList[i];
+    result = compareScores(score, recordScore.score);
+  }
+
+  if (result) {
+    console.log(chalk.yellowBright.bold.underline("* Congratulations! You have beaten a record. Please take a screenshot and send me it to update the table. *"));
+  }
 }
+
+welcome();
+game();
+checkScores();
